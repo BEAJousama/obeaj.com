@@ -2,12 +2,20 @@
 
 import type React from "react"
 
-import { useCallback, useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ExternalLink, Github, Linkedin, Twitter, Menu, X, Globe } from "lucide-react"
+import { useCallback, useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence, easeInOut, easeOut, easeIn } from "framer-motion"
+import { ExternalLink, Github, Linkedin, Twitter, Menu, X, Globe, ArrowBigLeft, ArrowLeft, ArrowRight } from "lucide-react"
 import WebGLBackground from "./components/WebGLBackground"
 import { useSectionContext } from "./components/SectionContext"
 import { useIntersectionObserver } from "./hooks/useIntersectionObserver"
+import gsap from "gsap"
+import { useGSAP } from '@gsap/react';
+import LanguageDropdown from "./language"
+import { getPageColor } from "./lib/utils"
+
+
+gsap.registerPlugin(useGSAP)
+
 
 // Language content
 const content = {
@@ -303,6 +311,7 @@ function Section({
   className?: string
 }) {
   const { setCurrentSection } = useSectionContext()
+  const color = getPageColor(id)
 
   const handleIntersection = useCallback(() => {
     setCurrentSection(id)
@@ -311,9 +320,10 @@ function Section({
   const sectionRef = useIntersectionObserver(handleIntersection)
 
   return (
-    <section ref={sectionRef} id={id} className={`min-h-screen flex items-center justify-center ${className}`}>
+    <motion.section
+    ref={sectionRef} id={id} className={`min-h-screen flex items-center justify-center ${className}`}>
       {children}
-    </section>
+    </motion.section>
   )
 }
 
@@ -322,6 +332,8 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [language, setLanguage] = useState<"en" | "fr">("en")
   const [isDesktop, setIsDesktop] = useState(false)
+  const hero = useRef(null)
+
 
   useEffect(() => {
     const checkIsDesktop = () => {
@@ -347,38 +359,18 @@ export default function Home() {
   // }
 
   return (
-    <main className="relative bg-black text-white overflow-x-hidden">
+    <main ref={hero} className="flex flex-col gap-32 md:gap-6 relative bg-black text-white overflow-x-hidden ">
       <WebGLBackground />
-
-      {/* Language Selector */}
-      <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex items-center space-x-2 bg-black/20 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-2">
-          <Globe size={16} className="text-cyan-400" />
-          <button
-            onClick={() => setLanguage("en")}
-            className={`px-3 py-1 rounded text-xs transition-colors ${
-              language === "en" ? "bg-cyan-400 text-black" : "text-cyan-400 hover:bg-cyan-400/20"
-            }`}
-          >
-            EN
-          </button>
-          <button
-            onClick={() => setLanguage("fr")}
-            className={`px-3 py-1 rounded text-xs transition-colors ${
-              language === "fr" ? "bg-cyan-400 text-black" : "text-cyan-400 hover:bg-cyan-400/20"
-            }`}
-          >
-            FR
-          </button>
-        </div>
-      </div>
 
       {/* Mobile Sidebar Toggle */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed top-4 left-4 z-50 md:hidden bg-cyan-400/20 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-2 text-cyan-400"
+        className={`fixed top-4 left-4 z-50 md:hidden bg-cyan-400/20 backdrop-blur-sm border-[0.5px] border-cyan-400/30 rounded-lg p-2 text-cyan-400 ${sidebarOpen ? "ml-12" : ""}`}
       >
-        {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+        {
+        sidebarOpen ? <ArrowLeft size={20} /> : <ArrowRight size={20} />
+        
+        }
       </button>
 
       {/* Left Sidebar */}
@@ -392,7 +384,7 @@ export default function Home() {
         >
           {/* Logo */}
           <div className="text-3xl font-bold text-cyan-400 flex justify-center items-center p-4">
-            <div className="w-12 h-12 border-2 border-cyan-400 rounded-lg flex items-center justify-center">
+            <div className="w-12 h-12 border-[0.5px]  border-cyan-400 rounded-lg flex items-center justify-center">
               <span className="text-lg">B</span>
             </div>
           </div>
@@ -435,14 +427,16 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Right Side Contact Button */}
-      <div className="fixed top-6 right-6 z-30">
+      <div className="flex gap-2 fixed top-6 right-6 z-30">
         <a
           href="#contact"
-          className="border border-cyan-400 text-cyan-400 px-6 py-2 rounded hover:bg-cyan-400 hover:text-black transition-all duration-300 text-sm font-light tracking-wider"
+          className="border-[0.5px] border-cyan-400 text-cyan-400 px-6 py-2 rounded hover:bg-cyan-400 hover:text-black transition-all duration-300 text-sm font-light tracking-wider"
         >
           {t.nav.contact}
         </a>
+        <LanguageDropdown />
       </div>
+
 
       {/* Home Section */}
       <Section id="home" className={`relative z-10 pl-${sidebarOpen ? 12 : 4} sm:pl-12`}>
@@ -452,7 +446,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="text-gray-300 mb-6 text-sm tracking-wider font-light"
+              className="text-gray-300 mb-6 text-sm tracking-wider font-light" 
             >
               {"I'M"} {t.name}
             </motion.p>
@@ -471,17 +465,14 @@ export default function Home() {
           </div>
 
           {/* 3D Visualization Area */}
-          <div className="flex-1 flex justify-center items-center">
+          {/* <div className="flex-1 flex justify-center items-center">
             <div className="relative w-96 h-96">
-              {/* Circular wireframe design */}
-              <div className="absolute inset-0 border border-cyan-400/30 rounded-full"></div>
-              <div className="absolute inset-4 border border-cyan-400/20 rounded-full"></div>
-              <div className="absolute inset-8 border border-cyan-400/10 rounded-full"></div>
+              <div className="absolute inset-0 border-[0.5px] border-cyan-400/30 rounded-full"></div>
+              <div className="absolute inset-4 border-[0.5px] border-cyan-400/20 rounded-full"></div>
+              <div className="absolute inset-8 border-[0.5px] border-cyan-400/10 rounded-full"></div>
 
-              {/* Center shape */}
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-16 border border-cyan-400/40 rounded-full"></div>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-16 border-[0.5px] border-cyan-400/40 rounded-full"></div>
 
-              {/* Grid pattern overlay */}
               <div className="absolute inset-0 opacity-20">
                 <svg width="100%" height="100%" className="text-cyan-400">
                   <defs>
@@ -493,17 +484,17 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Right side badges */}
           <div className="flex flex-col space-y-4 items-center">
-            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-3 text-center">
+            <div className="bg-gray-800/50 backdrop-blur-sm border-[0.5px] border-gray-700 rounded-lg p-3 text-center">
               <div className="text-cyan-400 text-xs">JS</div>
             </div>
-            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-3 text-center">
+            <div className="bg-gray-800/50 backdrop-blur-sm border-[0.5px] border-gray-700 rounded-lg p-3 text-center">
               <div className="text-cyan-400 text-xs">TS</div>
             </div>
-            <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-lg p-3 text-center">
+            <div className="bg-gray-800/50 backdrop-blur-sm border-[0.5px] border-gray-700 rounded-lg p-3 text-center">
               <div className="text-cyan-400 text-xs">+5</div>
             </div>
           </div>
@@ -511,7 +502,7 @@ export default function Home() {
       </Section>
 
       {/* About Section */}
-      <Section id="about" className="relative z-10 pl-20">
+      <Section id="about" className={`relative z-10 pl-${sidebarOpen ? 12 : 4} sm:pl-12`}>
         <div className="max-w-7xl w-full px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left Column - About */}
@@ -522,7 +513,7 @@ export default function Home() {
                 <span className="text-gray-500">{t.about.title}</span>
               </h2>
 
-              <div className="mt-12">
+              <div className="mt-12 ">
                 <div className="w-48 h-64 bg-gray-800 rounded-lg mb-6 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
                     <div className="w-24 h-24 bg-black rounded-full flex items-center justify-center">
@@ -530,10 +521,11 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
+                <div className="flex flex-col gap-4 bg-black/10 backdrop-blur-md rounded-lg px-4 py-6">
+                  <p className="text-gray-300 text-md leading-relaxed mb-4">{t.about.description}</p>
+                  <p className="text-gray-400 text-md leading-relaxed">{t.about.description2}</p>
+                </div>
 
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">{t.about.description}</p>
-
-                <p className="text-gray-400 text-sm leading-relaxed">{t.about.description2}</p>
               </div>
             </div>
 
@@ -573,7 +565,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                <button className="mt-8 border border-cyan-400 text-cyan-400 px-6 py-2 rounded text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300">
+                <button className="mt-8 border-[0.5px] border-cyan-400 text-cyan-400 px-6 py-2 rounded text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300">
                   {t.projects.viewAll}
                 </button>
               </div>
@@ -583,7 +575,7 @@ export default function Home() {
       </Section>
 
       {/* Projects Section */}
-      <Section id="projects" className="relative z-10 pl-20">
+      <Section id="projects" className={`relative z-10 pl-${sidebarOpen ? 12 : 4} sm:pl-12`}>
         <div className="max-w-7xl w-full px-8 bg-black/10 backdrop-blur-md rounded-lg p-4">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-5xl font-bold">
@@ -620,7 +612,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center mt-12">
-            <button className="border border-cyan-400 text-cyan-400 px-8 py-3 rounded text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300">
+            <button className="border-[0.5px] border-cyan-400 text-cyan-400 px-8 py-3 rounded text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300">
               {t.projects.viewAll}
             </button>
           </div>
@@ -628,7 +620,7 @@ export default function Home() {
       </Section>
 
       {/* Experience Section */}
-      <Section id="experience" className="relative z-10 pl-20">
+      <Section id="experience" className={`relative z-10 pl-${sidebarOpen ? 12 : 4} sm:pl-12`}>
         <div className="max-w-7xl w-full px-8 bg-black/10 backdrop-blur-md rounded-lg p-4">
           <h2 className="text-5xl font-bold mb-12">
             <span className="text-cyan-400">{t.experience.title}</span>
@@ -655,8 +647,8 @@ export default function Home() {
       </Section>
 
       {/* Contact Section */}
-      <Section id="contact" className="relative z-10 pl-20">
-        <div className="max-w-7xl w-full px-8 bg-black/10 backdrop-blur-md rounded-lg p-4">
+      <Section id="contact" className={`relative z-10 pl-${sidebarOpen ? 12 : 4} sm:pl-12`}>
+        <div className="max-w-7xl w-full px-8 ">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left Column */}
             <div>
@@ -685,14 +677,14 @@ export default function Home() {
             </div>
 
             {/* Right Column - Form */}
-            <div>
+            <div className="bg-black/10 backdrop-blur-md rounded-lg p-4">
               <form className="space-y-6">
                 <div>
                   <label className="block text-gray-400 text-xs mb-2 tracking-wider">{t.contact.form.name}</label>
                   <input
                     type="text"
                     placeholder="John Doe"
-                    className="w-full bg-gray-800/50 border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-colors"
+                    className="w-full bg-gray-800/50 border-[0.5px] border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -701,7 +693,7 @@ export default function Home() {
                   <input
                     type="email"
                     placeholder="john@example.com"
-                    className="w-full bg-gray-800/50 border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-colors"
+                    className="w-full bg-gray-800/50 border-[0.5px] border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -709,10 +701,10 @@ export default function Home() {
                   <label className="block text-gray-400 text-xs mb-2 tracking-wider">{t.contact.form.message}</label>
                   <textarea
                     rows={6}
-                    className="w-full bg-gray-800/50 border border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-colors"
+                    className="w-full bg-gray-800/50 border-[0.5px] border-gray-700 rounded px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-colors"
                   />
                 </div>
-                <button className="border border-cyan-400 text-cyan-400 px-8 py-3 rounded text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300">
+                <button className="border-[0.5px] border-cyan-400 text-cyan-400 px-8 py-3 rounded text-sm hover:bg-cyan-400 hover:text-black transition-all duration-300">
                   {t.contact.form.send}
                 </button>
               </form>

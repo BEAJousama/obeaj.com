@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { useSectionContext } from './SectionContext'
+import { getPageColor } from '../lib/utils'
 
 // Organic tunnel/torus structure
 function OrganicTunnel({ position, color = '#00ffff', scale = 1, speed = 1 }: { 
@@ -283,14 +284,14 @@ function Scene({ currentColor }: { currentColor: string }) {
       <pointLight position={[-10, -10, -10]} intensity={0.2} color={currentColor} />
       
       {/* Main organic structures */}
-      <OrganicTunnel position={[0, 0, -10]} color={currentColor} scale={10} speed={-0.9} />
+      <OrganicTunnel position={[0, 0, -10]} color={currentColor} scale={12} speed={0.1} />
       {/* <OrganicTunnel position={[0, 0, -10]} color={currentColor} scale={20} speed={-0.9} /> */}
       
       {/* Flowing curves */}
       {/* <FlowingCurves color={currentColor} /> */}
       
       {/* Particle field */}
-      <OrganicParticles color={currentColor} />
+      {/* <OrganicParticles color={currentColor} /> */}
       
       {/* Connecting web */}
       {/* <ConnectingWeb color={currentColor} /> */}
@@ -318,14 +319,7 @@ export default function WebGLBackground() {
   // Color mapping for different sections
   
   useEffect(() => {
-      const sectionColors = {
-        home: '#00ffff',     // Cyan
-        about: '#00ff7f',    // Spring green
-        projects: '#0066ff', // Blue
-        contact: '#ff6600',  // Orange
-        resume: '#ff00ff'    // Magenta
-      }
-    setCurrentColor(sectionColors[currentSection as keyof typeof sectionColors] || sectionColors.home)
+    setCurrentColor(getPageColor(currentSection))
   }, [currentSection])
   
   // Check WebGL support

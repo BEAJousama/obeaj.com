@@ -12,7 +12,7 @@ const Sidebar = () => {
       <a href="#projects" className="text-gray-300 hover:text-cyan-400 transition-colors">Projects</a>
       <a href="#contact" className="text-gray-300 hover:text-cyan-400 transition-colors">Contact</a> */}
     </div>
-    <button className="border border-cyan-400 text-cyan-400 px-4 py-2 rounded hover:bg-cyan-400 hover:text-black transition-colors">
+    <button className="border-[0.5px] border-cyan-400 text-cyan-400 px-4 py-2 rounded hover:bg-cyan-400 hover:text-black transition-colors">
       Contact
     </button>
   </nav>
