@@ -1,7 +1,14 @@
 import React from 'react';
 
 
-const Card = () => {
+interface ICardProps {
+  title: string;
+  description: string;
+  image?: string;
+  links?: { label: string; url: string }[];
+}
+
+const Card = ({title, description, image, links} : ICardProps) => {
   return (
     <div className="flex flex-col">
       <h2>Card Title</h2>

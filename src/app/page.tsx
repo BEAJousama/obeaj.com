@@ -13,294 +13,13 @@ import gsap from "gsap"
 import { useGSAP } from '@gsap/react';
 import LanguageDropdown from "./language"
 import { getPageColor } from "./lib/utils"
+import {content} from "./lib/data"
 
 
 gsap.registerPlugin(useGSAP)
 
 
-// Language content
-const content = {
-  en: {
-    name: "BEAJ OUSAMA",
-    title: "Fullstack Web Developer",
-    roles: ["Developer", "Designer", "Creator"],
-    nav: {
-      work: "Work",
-      about: "About",
-      contact: "Contact",
-      resume: "Resume",
-    },
-    about: {
-      title: "About",
-      description:
-        "I'm Beaj Ousama, a creative Fullstack Web Developer with expertise in Next.js, React.js, and Tailwind CSS. Background in cybersecurity and embedded systems, with a strong understanding of information systems architecture.",
-      description2:
-        "Passionate about building attractive and functional web applications. Constantly learning and evolving with modern technologies like Docker, Kubernetes, and cloud platforms.",
-    },
-    education: {
-      title: "Education",
-      items: [
-        {
-          id: "01",
-          school: "1337 SCHOOL (42 NETWORK)",
-          period: "2021 - Present",
-          degree: "Information Systems Architecture",
-          location: "Khouribga, Morocco",
-        },
-        {
-          id: "02",
-          school: "INSA CVL",
-          period: "2018 - 2019",
-          degree: "Information Security and Technologies",
-          location: "Bourges, France",
-        },
-        {
-          id: "03",
-          school: "ENSA KENITRA",
-          period: "2014 - 2018",
-          degree: "Networks and Telecommunications",
-          location: "Kenitra, Morocco",
-        },
-      ],
-    },
-    skills: {
-      title: "Technical Skills",
-      categories: [
-        {
-          name: "Frontend",
-          skills: ["React.js", "Next.js", "TypeScript", "Tailwind CSS"],
-        },
-        {
-          name: "Backend",
-          skills: ["NestJS", "Node.js", "PostgreSQL", "MongoDB"],
-        },
-        {
-          name: "DevOps",
-          skills: ["Docker", "Kubernetes", "Ansible", "Linux"],
-        },
-      ],
-    },
-    projects: {
-      title: "Projects",
-      items: [
-        {
-          id: "01",
-          title: "PONGMASTERS",
-          period: "May 2023 - Aug 2023",
-          technologies: ["NestJS", "PostgreSQL", "Socket.io", "Next.js"],
-          description:
-            "Developed an online Pong game playable with friends, featuring real-time matches and an integrated chat system for live interaction.",
-        },
-        {
-          id: "02",
-          title: "BEIGE PILL",
-          period: "Dec 2023 - May 2024",
-          technologies: ["Next.js", "Sanity CMS", "GSAP"],
-          description:
-            "Created a minimalist portfolio website for a Paris-based digital studio with smooth animations and headless CMS integration.",
-        },
-        {
-          id: "03",
-          title: "FLEMING WATCHES",
-          period: "Mar 2024 - Apr 2024",
-          technologies: ["Next.js", "Klaviyo", "SendGrid"],
-          description:
-            "Developed a fully-featured e-commerce platform for a luxury watch brand with integrated email marketing.",
-        },
-        {
-          id: "04",
-          title: "CLOUD-1",
-          period: "Oct 2024 - Nov 2024",
-          technologies: ["Docker", "Ansible", "DigitalOcean"],
-          description: "Containerized and automated the deployment of web applications on DigitalOcean cloud platform.",
-        },
-      ],
-      viewAll: "View All",
-    },
-    experience: {
-      title: "Experience",
-      items: [
-        {
-          id: "01",
-          position: "Fullstack Web Developer",
-          company: "FUTURECORP",
-          period: "Nov 2023 - Mar 2025",
-          location: "Paris, France (Remote)",
-          description:
-            "Built dynamic portfolio websites and client platforms using Next.js, React, and TypeScript. Integrated headless CMS platforms like Sanity and Strapi for flexible content management.",
-        },
-        {
-          id: "02",
-          position: "Embedded Linux Intern",
-          company: "OCCITALINE",
-          period: "Apr 2019 - Sep 2019",
-          location: "Toulouse, France",
-          description: "Design and configuration of a LoRaWAN gateway for technical building management systems.",
-        },
-        {
-          id: "03",
-          position: "Cybersecurity Intern",
-          company: "IT6",
-          period: "Jun 2017 - Jul 2017",
-          location: "Rabat, Morocco",
-          description: "Contributed to a SIEM-Elastic Stack project for cybersecurity event management and monitoring.",
-        },
-      ],
-    },
-    contact: {
-      title: "Contact",
-      description:
-        "Want to work on your projects? I am looking for opportunities in software engineering, UI/UX, and would love to hear from you. Let's connect!",
-      form: {
-        name: "NAME",
-        email: "EMAIL",
-        message: "MESSAGE",
-        send: "Send",
-      },
-    },
-  },
-  fr: {
-    name: "BEAJ OUSAMA",
-    title: "Développeur Web Fullstack",
-    roles: ["Développeur", "Designer", "Créateur"],
-    nav: {
-      work: "Travail",
-      about: "À propos",
-      contact: "Contact",
-      resume: "CV",
-    },
-    about: {
-      title: "À propos",
-      description:
-        "Je suis Beaj Ousama, un développeur Web Fullstack créatif avec une expertise en Next.js, React.js et Tailwind CSS. Formation en cybersécurité et systèmes embarqués, avec une solide compréhension de l'architecture des systèmes d'information.",
-      description2:
-        "Passionné par la création d'applications web attrayantes et fonctionnelles. En constante évolution avec les technologies modernes comme Docker, Kubernetes et les plateformes cloud.",
-    },
-    education: {
-      title: "Formation",
-      items: [
-        {
-          id: "01",
-          school: "1337 SCHOOL (RÉSEAU 42)",
-          period: "2021 - Présent",
-          degree: "Architecture des systèmes d'information",
-          location: "Khouribga, Maroc",
-        },
-        {
-          id: "02",
-          school: "INSA CVL",
-          period: "2018 - 2019",
-          degree: "Sécurité de l'information et technologies",
-          location: "Bourges, France",
-        },
-        {
-          id: "03",
-          school: "ENSA KÉNITRA",
-          period: "2014 - 2018",
-          degree: "Réseaux et Télécommunications",
-          location: "Kénitra, Maroc",
-        },
-      ],
-    },
-    skills: {
-      title: "Compétences Techniques",
-      categories: [
-        {
-          name: "Frontend",
-          skills: ["React.js", "Next.js", "TypeScript", "Tailwind CSS"],
-        },
-        {
-          name: "Backend",
-          skills: ["NestJS", "Node.js", "PostgreSQL", "MongoDB"],
-        },
-        {
-          name: "DevOps",
-          skills: ["Docker", "Kubernetes", "Ansible", "Linux"],
-        },
-      ],
-    },
-    projects: {
-      title: "Projets",
-      items: [
-        {
-          id: "01",
-          title: "PONGMASTERS",
-          period: "Mai 2023 - Août 2023",
-          technologies: ["NestJS", "PostgreSQL", "Socket.io", "Next.js"],
-          description:
-            "Développement d'un jeu Pong en ligne jouable entre amis, avec des matchs en temps réel et un système de messagerie intégré.",
-        },
-        {
-          id: "02",
-          title: "BEIGE PILL",
-          period: "Déc 2023 - Mai 2024",
-          technologies: ["Next.js", "Sanity CMS", "GSAP"],
-          description:
-            "Création d'un site portfolio minimaliste pour un studio digital basé à Paris avec animations fluides et CMS headless.",
-        },
-        {
-          id: "03",
-          title: "FLEMING WATCHES",
-          period: "Mars 2024 - Avril 2024",
-          technologies: ["Next.js", "Klaviyo", "SendGrid"],
-          description:
-            "Développement d'une plateforme e-commerce complète pour une marque de montres de luxe avec marketing par email intégré.",
-        },
-        {
-          id: "04",
-          title: "CLOUD-1",
-          period: "Oct 2024 - Nov 2024",
-          technologies: ["Docker", "Ansible", "DigitalOcean"],
-          description:
-            "Containerisation et automatisation du déploiement d'applications web sur la plateforme cloud DigitalOcean.",
-        },
-      ],
-      viewAll: "Voir Tout",
-    },
-    experience: {
-      title: "Expérience",
-      items: [
-        {
-          id: "01",
-          position: "Développeur Web Fullstack",
-          company: "FUTURECORP",
-          period: "Nov 2023 - Mars 2025",
-          location: "Paris, France (À distance)",
-          description:
-            "Création de sites web dynamiques et plateformes clients avec Next.js, React et TypeScript. Intégration de CMS headless comme Sanity et Strapi.",
-        },
-        {
-          id: "02",
-          position: "Stagiaire Linux Embarqué",
-          company: "OCCITALINE",
-          period: "Avril 2019 - Sep 2019",
-          location: "Toulouse, France",
-          description: "Conception et configuration d'une passerelle LoRaWAN pour la gestion technique de bâtiments.",
-        },
-        {
-          id: "03",
-          position: "Stagiaire Cybersécurité",
-          company: "IT6",
-          period: "Juin 2017 - Juillet 2017",
-          location: "Rabat, Maroc",
-          description:
-            "Contribution à un projet SIEM basé sur Elastic Stack pour la gestion des événements de sécurité cybernétique.",
-        },
-      ],
-    },
-    contact: {
-      title: "Contact",
-      description:
-        "Envie de travailler sur vos projets ? Je recherche des opportunités en ingénierie logicielle, UI/UX, et serais ravi d'avoir de vos nouvelles. Connectons-nous !",
-      form: {
-        name: "NOM",
-        email: "EMAIL",
-        message: "MESSAGE",
-        send: "Envoyer",
-      },
-    },
-  },
-}
+
 
 function Section({
   id,
@@ -492,42 +211,21 @@ export default function Home() {
                 transition={{ delay: 0.6, duration: 1 }}
                 className="text-7xl font-bold mb-8 leading-tight"
               >
-                <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,255,255,0.3)]">
+                <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text drop-shadow-[0_0_10px_rgba(0,255,255,0.3)]">
                   {t.roles[0]}
                 </span>
                 <br />
-                <span className="text-gray-400 bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent">
+                <span className="text-gray-400 bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text">
                   {t.roles[1]}
                 </span>
                 <br />
-                <span className="text-gray-500 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text text-transparent">
+                <span className="text-gray-500 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text">
                   {t.roles[2]}
                 </span>
               </motion.h1>
             </motion.div>
           </div>
 
-          {/* 3D Visualization Area */}
-          {/* <div className="flex-1 flex justify-center items-center">
-            <div className="relative w-96 h-96">
-              <div className="absolute inset-0 border-[0.5px] border-cyan-400/30 rounded-full"></div>
-              <div className="absolute inset-4 border-[0.5px] border-cyan-400/20 rounded-full"></div>
-              <div className="absolute inset-8 border-[0.5px] border-cyan-400/10 rounded-full"></div>
-
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-16 border-[0.5px] border-cyan-400/40 rounded-full"></div>
-
-              <div className="absolute inset-0 opacity-20">
-                <svg width="100%" height="100%" className="text-cyan-400">
-                  <defs>
-                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                    </pattern>
-                  </defs>
-                  <rect width="100%" height="100%" fill="url(#grid)" />
-                </svg>
-              </div>
-            </div>
-          </div> */}
 
           {/* Futuristic skill badges */}
           <div className="flex flex-col space-y-6 items-center">
@@ -583,7 +281,7 @@ export default function Home() {
                 className="relative"
               >
                 <h2 className="text-5xl font-bold mb-8 relative">
-                  <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent ">
+                  <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text ">
                     {t.about.title}
                   </span>
                   <br />
@@ -636,7 +334,7 @@ export default function Home() {
               className="bg-black/20 backdrop-blur-md border border-cyan-400/20 rounded-2xl p-6 shadow-[0_0_20px_rgba(0,255,255,0.05)] hover:shadow-[0_0_30px_rgba(0,255,255,0.1)] transition-all duration-300"
             >
               <h3 className="text-3xl font-bold mb-8">
-                <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent uppercase">
+                <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text uppercase">
                   {t.education.title}
                 </span>
                 <br />
@@ -710,7 +408,7 @@ export default function Home() {
             className="relative"
           >
             <h2 className="text-6xl w-fit font-bold mb-16 relative">
-              <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent ">
+              <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text ">
                 {t.projects.title}
               </span>
               <br />
@@ -750,7 +448,7 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors bg-gradient-to-r from-white to-gray-300 bg-clip-text">
                       {project.title}
                     </h3>
                     
@@ -805,7 +503,7 @@ export default function Home() {
             className="relative"
           >
             <h2 className="text-6xl w-fit font-bold mb-16 relative">
-              <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent ">
+              <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text ">
                 {t.experience.title}
               </span>
               <br />
@@ -837,7 +535,7 @@ export default function Home() {
                         {exp.period}
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    <h3 className="text-2xl font-bold text-white mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text">
                       {exp.position}
                     </h3>
                     <p className="text-cyan-400 text-sm mb-4 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 px-3 py-1 rounded-full inline-block">
@@ -864,11 +562,11 @@ export default function Home() {
             className="relative"
           >
             <h2 className="text-6xl font-bold mb-16 relative">
-              <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="text-cyan-400 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text">
                 {t.contact.title}
               </span>
               <br />
-              <span className="text-gray-500 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text text-transparent">
+              <span className="text-gray-500 bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text">
                 {t.contact.title}
               </span>
             </h2>
