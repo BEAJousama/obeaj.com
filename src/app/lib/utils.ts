@@ -3,10 +3,11 @@
 export const getPageColor = (page: string) => {
     const colors = {
         home: '#00ffff',     // Cyan
-        about: '#00ff7f',    // Spring green
+        about: '#07CE9B',    // Spring green
         projects: '#0066ff', // Blue
-        contact: '#00ff7f',
-        resume: '#0066ff'
+        contact: '#00FFCC',
+        resume: '#0066ff',
+        experience: '#0045ff'
     }
     
     switch (page) {

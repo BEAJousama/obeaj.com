@@ -47,7 +47,7 @@ export default function LanguageDropdown() {
         {/* Trigger Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center space-x-3 bg-black/20 backdrop-blur-sm border-[0.5px] border-cyan-400/30 rounded-lg p-2 hover:bg-black/30 transition-all duration-200 hover:border-cyan-400/50 group"
+          className="flex items-center space-x-3 bg-black/20 backdrop-blur-sm border-[0.5px] border-cyan-400/30 rounded-2xl p-2 hover:bg-black/30 transition-all duration-200 hover:border-cyan-400/50 group"
         >
           <Globe size={18} className="text-cyan-400 group-hover:text-cyan-300 transition-colors" />
           <div className="flex items-center space-x-2">
@@ -62,7 +62,7 @@ export default function LanguageDropdown() {
 
         {/* Dropdown Menu */}
         <div
-          className={`absolute top-full left-0 mt-2 w-64 bg-black/40 backdrop-blur-md border-[0.5px] border-cyan-400/30 rounded-lg shadow-2xl shadow-cyan-400/10 transition-all duration-300 origin-top z-50 ${
+          className={`absolute top-full left-0 mt-2 w-64 bg-black/40 backdrop-blur-md border-[0.5px] border-cyan-400/30 rounded-2xl shadow-2xl shadow-cyan-400/10 transition-all duration-300 origin-top z-50 ${
             isOpen ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
           }`}
         >
@@ -71,7 +71,7 @@ export default function LanguageDropdown() {
               <button
                 key={lang.code}
                 onClick={() => handleLanguageSelect(lang.code)}
-                className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-all duration-200 hover:bg-cyan-400/10 hover:border-cyan-400/20 border-[0.5px] border-transparent group ${
+                className={`w-full flex items-center space-x-3 p-3 rounded-2xl transition-all duration-200 hover:bg-cyan-400/10 hover:border-cyan-400/20 border-[0.5px] border-transparent group ${
                   language === lang.code ? "bg-cyan-400/20 border-cyan-400/30" : ""
                 }`}
                 style={{
